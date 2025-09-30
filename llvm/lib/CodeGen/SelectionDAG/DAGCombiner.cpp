@@ -10991,9 +10991,10 @@ SDValue DAGCombiner::visitSRA(SDNode *N) {
       // extend already), the truncated to type is legal, sign_extend is legal
       // on that type, and the truncate to that type is both legal and free,
       // perform the transform.
+      // Changed
       if ((ShiftAmt > 0) &&
-          TLI.isOperationLegalOrCustom(ISD::SIGN_EXTEND, TruncVT) &&
-          TLI.isOperationLegalOrCustom(ISD::TRUNCATE, VT) &&
+          TLI.isOperationLegalOrCustom(ISD::SIGN_EXTEND, VT) &&
+          TLI.isOperationLegalOrCustom(ISD::TRUNCATE, TruncVT) &&
           TLI.isTruncateFree(VT, TruncVT)) {
         SDValue Amt = DAG.getShiftAmountConstant(ShiftAmt, VT, DL);
         SDValue Shift = DAG.getNode(ISD::SRL, DL, VT,
